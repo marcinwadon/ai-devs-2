@@ -1,10 +1,10 @@
 import sys
 
-from task import solve
+from task import debug
 import asyncio
 
 async def main(taskName: str):
-    await solve(taskName)
+    await debug(taskName)
 
 if __name__ == '__main__':
     import time

@@ -1,5 +1,6 @@
 import requests
 import os
+from colorama import Fore, Style
 
 baseURL = os.environ['AI_DEVS_BASE_URL']
 apiKey = os.environ['AI_DEVS_TOKEN']
@@ -10,7 +11,7 @@ def fetchToken(name: str) -> str:
     result = response.json()
 
     if result['code'] != 0:
-        print(result)
+        print(f"{Fore.RED}{result}{Style.RESET_ALL}")
         exit(-1)
     
     return result['token']
