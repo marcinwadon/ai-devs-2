@@ -16,7 +16,7 @@ async def debug(name: str):
     task = fetchTask(token)
 
     print(f"{Fore.BLUE}Making answer{Style.RESET_ALL}")
-    answer = makeAnswer(name, task)
+    answer = makeAnswer(name, task, token)
 
     print(f"{Fore.GREEN}Answer = {json.dumps(answer)}{Style.RESET_ALL}")
 
@@ -27,12 +27,12 @@ async def solve(name: str):
     task = fetchTask(token)
 
     print(f"{Fore.BLUE}Making answer{Style.RESET_ALL}")
-    answer = makeAnswer(name, task)
+    answer = makeAnswer(name, task, token)
     print(f"{Fore.GREEN}Answer = {json.dumps(answer)}{Style.RESET_ALL}")
 
     result = sendAnswer(answer, token)
 
-def makeAnswer(name: str, input: dict) -> dict:
+def makeAnswer(name: str, input: dict, token: str) -> dict:
     task = import_module('tasks.' + name)
-    return task.main(input)
+    return task.main(input, token)
 

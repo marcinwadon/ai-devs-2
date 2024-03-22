@@ -34,3 +34,12 @@ def sendAnswer(answer: str, token: str) -> dict:
 
     return result
 
+def sendQuestion(question: str, token: str) -> dict:
+    url = baseURL + "/task/" + token
+    headers = {'Content-type': 'multipart/form-data'}
+    body = dict(question=question)
+    print(body)
+    response = requests.post(url, data=body)
+    result = response.json()
+
+    return result
