@@ -1,14 +1,7 @@
-from openai import OpenAI
 from langchain_community.llms import Ollama
 
-def main(input: str, token: str) -> str:
-
-    question = input["question"]
-    store = input["input"]
-
-    llm = Ollama(model="llama2")
-
-    prompt1 = """ Return the person name that you find in the following question:
+def extractName(llm, question: str) -> str:
+    prompt = """ Return the person name that you find in the following question:
     ###
     {question}
     ###
@@ -17,25 +10,37 @@ def main(input: str, token: str) -> str:
 
     """
 
-    name = llm.invoke(prompt1.format(question=question)).strip()
+    name = llm.invoke(prompt.format(question=question)).strip()
+
+    if len(name.split()) == 1:
+        return name
+    else:
+        return extractName(llm, question)
+
+def main(input: str, token: str) -> str:
+
+    question = input["question"]
+    store = input["input"]
+
+    llm = Ollama(model="llama2")
+
+    name = extractName(llm, question)
 
     facts = list(filter(lambda k: name in k, store))
 
-    print(name)
-    print(facts)
-
-    prompt2 = """
+    prompt = """
     Answer the question based only on the following context:
     ###
     {facts}
     ###
 
     Do not return any comment or side not, just the answer.
+    Answer in Polish.
 
     Question: {question}
 
     """
 
-    answer = llm.invoke(prompt2.format(facts=facts, question=question)).strip()
+    answer = llm.invoke(prompt.format(facts=facts, question=question)).strip()
 
     return answer
