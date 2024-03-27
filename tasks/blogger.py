@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-def main(input: str) -> str:
+def main(input: str, token: str) -> str:
     chapters = input["blog"]
 
     client = OpenAI()
