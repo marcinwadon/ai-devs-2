@@ -32,7 +32,7 @@
               inherit inputs pkgs;
               modules = [
                 {
-                  packages = [ py ];
+                  packages = [ py pkgs.ffmpeg ];
                   languages.python = {
                     enable = true;
                     version = "3.11";
